@@ -15032,7 +15032,7 @@ function gp() {
       try {
         const C = await (await fetch(`/api/check-payment?id=${t.transaction_id}`)).json();
         if (C.success && C.status) {
-          if (h(C.status), C.status === "paid") return console.log("PAGAMENTO DA TAXA DE EMISSÁƒO CONFIRMADO!"), setTimeout(() => {
+          if (h(C.status), C.status === "paid") return console.log("PAGAMENTO DA TAXA DE EMISSÁO CONFIRMADO!"), setTimeout(() => {
             e("/cadastro-concluido")
           }, 1e3), !0;
           if (C.status === "expired" || C.status === "cancelled") return c("Transação expirada ou cancelada. Por favor, tente novamente."), !0
@@ -15043,7 +15043,7 @@ function gp() {
       }
     }, m = setInterval(async () => {
       await p() && clearInterval(m)
-    }, 5e3);
+    }, 1e4);
     return () => clearInterval(m)
   }, [t == null ? void 0 : t.transaction_id, e]);
   const S = async () => {
