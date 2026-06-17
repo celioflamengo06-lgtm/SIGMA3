@@ -13030,7 +13030,7 @@ function f3() {
   return l.jsxs(l.Fragment, {
     children: [l.jsx("header", {
       children: l.jsx("img", {
-        src: "https://i.ibb.co/WGrsWGN/IMG-1297.jpg",
+        src: "https://i.imgur.com/8TPLaSx.png",
         alt: "Imagem de cabeçalho com design moderno e cores vibrantes",
         style: {
           width: "100%"
@@ -15001,7 +15001,8 @@ function gp() {
                 customer_name: b.nome,
                 customer_email: b.email || "cliente@email.com",
                 customer_phone: b.phone || "11999999999",
-                customer_cpf: b.cpf
+                customer_cpf: b.cpf,
+                utm: (function(){try{var u=JSON.parse(localStorage.getItem("utmData")||"{}");return{source:u.utm_source||null,medium:u.utm_medium||null,campaign:u.utm_campaign||null,content:u.utm_content||null,term:u.utm_term||null,fbclid:u.fbclid||null};}catch(e){return{};}})()
               })
             })).json();
           if (j.success) {
@@ -21483,7 +21484,8 @@ function DE() {
             customer_name: _.nome,
             customer_email: _.email,
             customer_phone: _.phone,
-            customer_cpf: _.cpf
+            customer_cpf: _.cpf,
+            utm: (function(){try{var u=JSON.parse(localStorage.getItem("utmData")||"{}");return{source:u.utm_source||null,medium:u.utm_medium||null,campaign:u.utm_campaign||null,content:u.utm_content||null,term:u.utm_term||null,fbclid:u.fbclid||null};}catch(e){return{};}})()
           })
         })).json();
       if (I.success) {
@@ -23607,14 +23609,26 @@ function Mg() {
 
 function zE() {
   const e = new URLSearchParams(window.location.search);
-  return {
+  const _utmObj = {
     fbclid: e.get("fbclid"),
     utmSource: e.get("utm_source"),
+    utm_source: e.get("utm_source"),
+    utm_medium: e.get("utm_medium"),
+    utm_campaign: e.get("utm_campaign"),
+    utm_content: e.get("utm_content"),
+    utm_term: e.get("utm_term"),
     utmMedium: e.get("utm_medium"),
     utmCampaign: e.get("utm_campaign"),
     utmContent: e.get("utm_content"),
-    utmTerm: e.get("utm_term")
-  }
+    utmTerm: e.get("utm_term"),
+    utm_source: e.get("utm_source"),
+    utm_medium: e.get("utm_medium"),
+    utm_campaign: e.get("utm_campaign"),
+    utm_content: e.get("utm_content"),
+    utm_term: e.get("utm_term")
+  };
+  if(e.get("utm_source")||e.get("fbclid")){try{localStorage.setItem("utmData",JSON.stringify(_utmObj));}catch(ex){}}
+  return _utmObj
 }
 async function UE(e) {
   var n;
@@ -24548,7 +24562,7 @@ function uT() {
           id: "como-se-inscrever",
           className: "mb-6",
           children: l.jsx("img", {
-            src: "https://www.gov.br/transportes/pt-br/assuntos/noticias/2025/12/cnh-do-brasil-como-solicitar-a-primeira-habilitacao-pelo-aplicativo/thumb-cnh-2.png",
+            src: "https://i.imgur.com/8TPLaSx.png",
             alt: "CNH do Brasil - Como se inscrever",
             className: "w-full rounded-lg shadow-md"
           })

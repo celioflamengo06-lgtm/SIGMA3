@@ -2,7 +2,82 @@
 <html lang="pt-BR">
   
 <!-- Mirrored from onhugbahtochnow.sbs/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 19 Jan 2026 16:05:49 GMT -->
-<head><!-- Meta Pixel Code -->
+<head>
+
+<!-- UTM Persistence: captura e mantém UTMs em toda a navegação -->
+<script>
+(function() {
+  var UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','ttclid','gclid','src','sck'];
+  var STORAGE_KEY = 'utmData';
+
+  // Captura UTMs da URL atual
+  function getUtmsFromUrl() {
+    var params = new URLSearchParams(window.location.search);
+    var utms = {};
+    UTM_KEYS.forEach(function(k) { var v = params.get(k); if (v) utms[k] = v; });
+    return utms;
+  }
+
+  // Salva no localStorage se tiver UTMs na URL
+  var current = getUtmsFromUrl();
+  if (Object.keys(current).length > 0) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(current)); } catch(e) {}
+  }
+
+  // Recupera UTMs salvas
+  function getSavedUtms() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { return {}; }
+  }
+
+  // Adiciona UTMs como query params na URL atual se não existirem
+  function appendUtmsToUrl() {
+    var utms = getSavedUtms();
+    if (!Object.keys(utms).length) return;
+    var params = new URLSearchParams(window.location.search);
+    var changed = false;
+    UTM_KEYS.forEach(function(k) {
+      if (utms[k] && !params.get(k)) { params.set(k, utms[k]); changed = true; }
+    });
+    if (changed) {
+      var newUrl = window.location.pathname + '?' + params.toString() + window.location.hash;
+      history.replaceState(null, '', newUrl);
+    }
+  }
+
+  // Expõe para uso no app React
+  window._getUtms = getSavedUtms;
+
+  // Aplica na página atual
+  appendUtmsToUrl();
+
+  // Intercepta pushState/replaceState do React Router para manter UTMs
+  var _push = history.pushState.bind(history);
+  var _replace = history.replaceState.bind(history);
+
+  function injectUtms(url) {
+    if (!url || typeof url !== 'string') return url;
+    try {
+      var base = window.location.origin;
+      var full = url.startsWith('/') ? base + url : url;
+      var u = new URL(full);
+      var utms = getSavedUtms();
+      UTM_KEYS.forEach(function(k) {
+        if (utms[k] && !u.searchParams.get(k)) u.searchParams.set(k, utms[k]);
+      });
+      return u.pathname + (u.search ? u.search : '') + u.hash;
+    } catch(e) { return url; }
+  }
+
+  history.pushState = function(state, title, url) {
+    return _push(state, title, injectUtms(url));
+  };
+  history.replaceState = function(state, title, url) {
+    return _replace(state, title, injectUtms(url));
+  };
+})();
+</script>
+
+<!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?

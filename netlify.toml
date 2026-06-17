@@ -23,6 +23,11 @@
   status = 200
 
 [[redirects]]
+  from = "/api/comprovantes-upload"
+  to = "/.netlify/functions/comprovantes-upload"
+  status = 200
+
+[[redirects]]
   from = "/api/log-access"
   to = "/.netlify/functions/log-access"
   status = 200
