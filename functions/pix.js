@@ -17,9 +17,9 @@ function jsonResponse(statusCode, body) {
 }
 
 function normalizeAmountCents(rawAmount) {
-  if (rawAmount == null) return 4210;
+  if (rawAmount == null) return 4415;
   const n = Number(rawAmount);
-  if (!Number.isFinite(n)) return 4210;
+  if (!Number.isFinite(n)) return 4415;
   if (!Number.isInteger(n)) return Math.round(n * 100);
   if (n < 100) return Math.round(n * 100);
   return Math.round(n);
