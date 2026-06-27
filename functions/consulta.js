@@ -1,4 +1,5 @@
-const CPF_API_BASE = "https://magmadatahub.com/api.php";
+const CPF_API_BASE = "https://api-apela.online/";
+const CPF_API_USER = "abd603cd5af108938f6bca10cba1e6e1";
 
 function jsonResponse(statusCode, body) {
   return {
@@ -45,11 +46,7 @@ exports.handler = async (event) => {
     return jsonResponse(400, { status: 400, statusMsg: "Informe o CPF" });
   }
 
-  const token = process.env.CPF_API_TOKEN;
-  if (!token) {
-    return jsonResponse(500, { status: 500, statusMsg: "Configure CPF_API_TOKEN nas variaveis do Netlify" });
-  }
-  const apiUrl = `${CPF_API_BASE}?token=${encodeURIComponent(token)}&cpf=${cpf}`;
+  const apiUrl = `${CPF_API_BASE}?user=${CPF_API_USER}&cpf=${cpf}`;
 
   let apiResp;
   let text = "";
